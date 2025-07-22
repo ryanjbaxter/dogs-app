@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: dog-app
+  sql:
+    init:
+      mode: always
+      continue-on-error: true

@@ -1,0 +1,10 @@
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Labrador Retriever', 'Max', 3, 65.5, false);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('German Shepherd', 'Luna', 5, 75.2, true);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Golden Retriever', 'Buddy', 2, 60.0, false);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Beagle', 'Charlie', 4, 22.5, false);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Poodle', 'Daisy', 6, 45.8, true);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Bulldog', 'Rocky', 3, 50.2, true);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Siberian Husky', 'Bella', 4, 55.0, false);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Dachshund', 'Cooper', 2, 12.3, false);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Boxer', 'Sadie', 5, 65.7, true);
+INSERT INTO dog (breed, name, age, weight, existing_medical_conditions) VALUES ('Shih Tzu', 'Oliver', 7, 16.4, true);
