@@ -1,0 +1,89 @@
+/* DogForm component styles */
+
+.dog-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dog-form-container h2 {
+  color: var(--spring-green);
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.dog-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--spring-border-light);
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--spring-green);
+  box-shadow: 0 0 0 2px rgba(109, 179, 63, 0.25);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group input {
+  margin-right: 10px;
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.error-message {
+  padding: 10px;
+  background-color: #ffebee;
+  border-left: 4px solid var(--spring-red);
+  margin-bottom: 20px;
+  color: var(--spring-red);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dog-form-container {
+    padding: 15px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button,
+  .form-actions a {
+    width: 100%;
+    text-align: center;
+  }
+}

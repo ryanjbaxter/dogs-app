@@ -1,0 +1,43 @@
+/* Home component styles */
+
+.home {
+  text-align: center;
+}
+
+.hero {
+  padding: 60px 20px;
+  background-color: var(--spring-bg-light);
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  margin-bottom: 20px;
+  color: var(--spring-green);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.feature {
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.feature h3 {
+  color: var(--spring-green);
+  margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+}

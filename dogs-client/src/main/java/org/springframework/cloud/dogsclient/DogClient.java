@@ -16,16 +16,19 @@ import org.springframework.web.service.annotation.PutExchange;
 @HttpExchange(url = "/dogs", accept = "application/json")
 public interface DogClient {
 
-	@GetExchange
-	public List<Dog> getDogs();
+	@GetExchange()
+	List<Dog> getDogs();
+
+	@GetExchange(value = "/{id}", version = "0.0.2")
+	List<Dog> getDogs(@PathVariable(required = false) Long id);
 
 	@PostExchange
-	public void createDogs(@RequestBody Dog newDog);
+	void createDogs(@RequestBody Dog newDog);
 
 	@PutExchange
-	public void updateDogs(@RequestBody Dog updatedDog);
+	void updateDogs(@RequestBody Dog updatedDog);
 
 	@DeleteExchange("/{id}")
-	public void deleteDogs(@PathVariable String id);
+	void deleteDogs(@PathVariable String id);
 
 }

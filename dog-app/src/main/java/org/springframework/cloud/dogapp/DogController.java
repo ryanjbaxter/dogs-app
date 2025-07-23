@@ -30,6 +30,17 @@ public class DogController {
 		return dogRepository.findAll();
 	}
 
+	@GetMapping(value = "/{id}", version = "0.0.2")
+	public Dog dog(@PathVariable Long id) {
+		return dogRepository.findById(id).get();
+	}
+
+	// I don't think a version here should be necessary
+	@GetMapping(value = "/{id}", version = "0.0.1")
+	public List<Dog> dogs(@PathVariable Long id) {
+		return List.of(dogRepository.findById(id).get());
+	}
+
 	@PostMapping
 	public Dog createDog(@RequestBody Dog dog) {
 		return dogRepository.save(dog);
