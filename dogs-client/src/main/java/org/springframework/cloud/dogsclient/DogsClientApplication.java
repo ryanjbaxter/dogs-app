@@ -38,7 +38,7 @@ public class DogsClientApplication {
 		public RestClientHttpServiceGroupConfigurer groupConfigurer(@Value("${dog-client.api.base-url}") String baseUrl) {
 			return groups ->
 				groups.filterByName("dogs").forEachClient((group, clientBuilder) ->
-						clientBuilder.baseUrl(baseUrl).apiVersionInserter(ApiVersionInserter.useHeader("api-version"))
+						clientBuilder.baseUrl(baseUrl).apiVersionInserter(ApiVersionInserter.useHeader("X-API-VERSION"))
 								.build());
 		}
 	}
