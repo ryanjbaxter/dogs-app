@@ -1,12 +1,20 @@
 package org.springframework.cloud.dogsclient.controller;
 
+import java.util.List;
+
 import org.springframework.cloud.dogsclient.Dog;
 import org.springframework.cloud.dogsclient.DogClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller that exposes the DogClient functionality to the React.js frontend.
@@ -24,7 +32,7 @@ public class DogController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Dog> getDog(@PathVariable Long id) {
-        return ResponseEntity.ok(dogClient.getDogs(id).getFirst());
+        return ResponseEntity.ok(dogClient.getDog(id).getFirst());
     }
 
     /**
@@ -45,7 +53,7 @@ public class DogController {
      */
     @PostMapping
     public ResponseEntity<Void> createDog(@RequestBody Dog dog) {
-        dogClient.createDogs(dog);
+        dogClient.createDog(dog);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -57,7 +65,7 @@ public class DogController {
      */
     @PutMapping
     public ResponseEntity<Void> updateDog(@RequestBody Dog dog) {
-        dogClient.updateDogs(dog);
+        dogClient.updateDog(dog);
         return ResponseEntity.ok().build();
     }
 
@@ -69,7 +77,7 @@ public class DogController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDog(@PathVariable Long id) {
-        dogClient.deleteDogs(id);
+        dogClient.deleteDog(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -5,16 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ApiVersionInserter;
-import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientHttpServiceGroupConfigurer;
 import org.springframework.web.service.registry.ImportHttpServices;
-import org.springframework.web.servlet.config.annotation.ApiVersionConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Main application class for the Dogs Client application.
@@ -40,16 +33,6 @@ public class DogsClientApplication {
 				groups.filterByName("dogs").forEachClient((group, clientBuilder) ->
 						clientBuilder.baseUrl(baseUrl).apiVersionInserter(ApiVersionInserter.useHeader("X-API-VERSION"))
 								.build());
-		}
-	}
-
-
-	// Necessary to be able to refresh the web app in the browser to allow react handle the routing
-	@RestController
-	static class SpaController {
-		@GetMapping({"/", "/{path:[^\\.]*}", "/{path:^(?!api$).*?}/{pathTwo:[^\\.]*}/{pathThree:[^\\.]*}"})
-		public String forwardToIndex() {
-			return "forward:/index.html";
 		}
 	}
 }

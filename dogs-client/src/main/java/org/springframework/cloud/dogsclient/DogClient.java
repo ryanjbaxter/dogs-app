@@ -20,15 +20,15 @@ public interface DogClient {
 	List<Dog> getDogs();
 
 	@GetExchange(value = "/{id}", version = "0.0.2")
-	List<Dog> getDogs(@PathVariable(required = false) Long id);
+	List<Dog> getDog(@PathVariable(required = false) Long id);
 
 	@PostExchange
-	void createDogs(@RequestBody Dog newDog);
+	void createDog(@RequestBody Dog newDog);
 
 	@PutExchange
-	void updateDogs(@RequestBody Dog updatedDog);
+	void updateDog(@RequestBody Dog updatedDog);
 
 	@DeleteExchange("/{id}")
-	void deleteDogs(@PathVariable String id);
+	void deleteDog(@PathVariable Long id);
 
 }
