@@ -16,19 +16,5 @@ public class DogAppApplication {
 		SpringApplication.run(DogAppApplication.class, args);
 	}
 
-	@Configuration
-	static class VersioningConfiguration implements WebMvcConfigurer {
-		@Override
-		public void configureApiVersioning(ApiVersionConfigurer configurer) {
-			StandardApiVersionDeprecationHandler deprecationHandler = new StandardApiVersionDeprecationHandler();
-			deprecationHandler.configureVersion("0.0.1").setDeprecationDate(ZonedDateTime.now());
-			configurer
-					.useRequestHeader("X-Api-Version")
-					//I don't think a default version should be necessary
-					.setDefaultVersion("0.0.1")
-					.setDeprecationHandler(deprecationHandler)
-					.setVersionRequired(false);
-		}
-	}
 
 }

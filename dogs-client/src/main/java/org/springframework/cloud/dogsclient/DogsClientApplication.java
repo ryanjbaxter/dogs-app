@@ -20,17 +20,4 @@ public class DogsClientApplication {
 		SpringApplication.run(DogsClientApplication.class, args);
 	}
 
-	/**
-	 * Configuration for the DogClient HTTP service.
-	 */
-	@ImportHttpServices(group = "dogs", types = DogClient.class)
-	@Configuration
-	static class DogClientConfig {
-		@Bean
-		public RestClientHttpServiceGroupConfigurer groupConfigurer() {
-			return groups ->
-				groups.forEachClient((group, clientBuilder) ->
-						clientBuilder.apiVersionInserter(ApiVersionInserter.useHeader("X-API-VERSION")).build());
-		}
-	}
 }
