@@ -20,4 +20,6 @@ public class DogsClientApplication {
 		SpringApplication.run(DogsClientApplication.class, args);
 	}
 
+	@Configuration
+	static class DogClientConfig{}
 }
