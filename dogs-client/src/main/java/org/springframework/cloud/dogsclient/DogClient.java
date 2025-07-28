@@ -20,7 +20,7 @@ public interface DogClient {
 	List<Dog> getDogs();
 
 	@GetExchange(value = "/{id}", version = "0.0.2")
-	List<Dog> getDog(@PathVariable(required = false) Long id);
+	Dog getDog(@PathVariable Long id);
 
 	@PostExchange
 	void createDog(@RequestBody Dog newDog);

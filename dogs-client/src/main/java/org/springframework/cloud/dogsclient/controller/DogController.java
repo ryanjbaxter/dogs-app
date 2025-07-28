@@ -32,7 +32,7 @@ public class DogController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Dog> getDog(@PathVariable Long id) {
-        return ResponseEntity.ok(dogClient.getDog(id).getFirst());
+        return ResponseEntity.ok(dogClient.getDog(id));
     }
 
     /**
