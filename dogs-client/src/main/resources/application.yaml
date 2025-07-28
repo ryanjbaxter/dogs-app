@@ -1,8 +1,12 @@
-dog-client:
-  api:
-    base-url: http://localhost:8080
 spring:
   application:
     name: dogs-client
+  http:
+    client:
+      service:
+        group:
+          dogs:
+            base-url: http://localhost:8080
+
 server:
   port: 9090

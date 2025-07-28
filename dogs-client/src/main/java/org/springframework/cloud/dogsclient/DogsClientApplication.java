@@ -26,13 +26,5 @@ public class DogsClientApplication {
 	@ImportHttpServices(group = "dogs", types = DogClient.class)
 	@Configuration
 	static class DogClientConfig {
-
-		@Bean
-		public RestClientHttpServiceGroupConfigurer groupConfigurer(@Value("${dog-client.api.base-url}") String baseUrl) {
-			return groups ->
-				groups.filterByName("dogs").forEachClient((group, clientBuilder) ->
-						clientBuilder.baseUrl(baseUrl).apiVersionInserter(ApiVersionInserter.useHeader("X-API-VERSION"))
-								.build());
-		}
 	}
 }
