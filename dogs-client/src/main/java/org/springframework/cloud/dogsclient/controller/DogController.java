@@ -68,7 +68,7 @@ public class DogController {
      * @return ResponseEntity with status code
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDog(@PathVariable String id) {
+    public ResponseEntity<Void> deleteDog(@PathVariable Long id) {
         dogClient.deleteDogs(id);
         return ResponseEntity.ok().build();
     }
