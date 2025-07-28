@@ -16,5 +16,7 @@ public class DogAppApplication {
 		SpringApplication.run(DogAppApplication.class, args);
 	}
 
-
+	@Configuration
+    static class WebMvcConfigurerAdapter implements WebMvcConfigurer {
+	}
 }
