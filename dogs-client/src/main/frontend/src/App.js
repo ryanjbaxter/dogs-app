@@ -32,7 +32,7 @@ function App() {
 
       <footer className="footer">
         <div className="container">
-          <p>&copy; {new Date().getFullYear()} Spring Framework</p>
+          <p>SpringOne 2025</p>
         </div>
       </footer>
     </div>
