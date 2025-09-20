@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566" # LocalStack services
+      - "4510-4559:4510-4559" # LocalStack service port range
+    environment:
+      - SERVICES=s3,sqs,lambda,dynamodb # Specify desired AWS services
+      - DEFAULT_REGION=us-east-1
+      - DOCKER_HOST=unix:///var/run/docker.sock # Required for Lambda to run in separate containers
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  consul:
+    container_name: consul
+    image: hashicorp/consul:latest
+    ports:
+      - "8500:8500" # Consul UI and HTTP API
+      - "8300:8300" # Server RPC
+      - "8301:8301" # Serf LAN
+      - "8302:8302" # Serf WAN
+      - "8600:8600/udp" # DNS
+    command: "agent -dev -client=0.0.0.0" # Run in development mode and expose to all interfaces
+
+  vault:
+    container_name: vault
+    image: hashicorp/vault:latest
+    ports:
+      - "8200:8200" # Vault API and UI
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=root # Set a simple root token for development
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200 # Listen on all interfaces
+    cap_add:
+      - IPC_LOCK # Allow Vault to lock memory to prevent sensitive values from being swapped to disk
+    command: "server -dev" # Run in development mode
+

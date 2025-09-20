@@ -1,12 +1,7 @@
 spring:
   application:
     name: dogs-client
-  http:
-    client:
-      service:
-        group:
-          dogs:
-            base-url: http://localhost:8080
-
+  config:
+    import: "configserver:"
 server:
   port: 9090

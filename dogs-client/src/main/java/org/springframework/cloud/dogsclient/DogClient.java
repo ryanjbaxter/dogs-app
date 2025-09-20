@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
@@ -29,6 +30,6 @@ public interface DogClient {
 	void updateDog(@RequestBody Dog updatedDog);
 
 	@DeleteExchange("/{id}")
-	void deleteDog(@PathVariable Long id);
+	void deleteDog(@PathVariable Long id, @RequestHeader("X-DELETE-TOKEN") String deleteToken);
 
 }

@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: awss3,awssecretsmanager
+server:
+  port: 8888

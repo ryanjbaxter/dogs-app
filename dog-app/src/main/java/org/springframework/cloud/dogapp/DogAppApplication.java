@@ -4,12 +4,14 @@ import java.time.ZonedDateTime;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.accept.StandardApiVersionDeprecationHandler;
 import org.springframework.web.servlet.config.annotation.ApiVersionConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
+@EnableConfigurationProperties(DogsConfiguration.class)
 public class DogAppApplication {
 
 	public static void main(String[] args) {

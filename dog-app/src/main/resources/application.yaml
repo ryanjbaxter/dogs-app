@@ -1,7 +1,11 @@
+
 spring:
+  config:
+    import: "configserver:http://localhost:8888"
   application:
     name: dog-app
   sql:
     init:
       mode: always
       continue-on-error: true
+

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.cloud.dogsclient.Dog;
 import org.springframework.cloud.dogsclient.DogClient;
+import org.springframework.cloud.dogsclient.DogsConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,9 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class DogController {
 
     private final DogClient dogClient;
+    private final DogsConfigurationProperties dogsConfigurationProperties;
 
-    public DogController(DogClient dogClient) {
+    public DogController(DogClient dogClient, DogsConfigurationProperties dogsConfigurationProperties) {
         this.dogClient = dogClient;
+        this.dogsConfigurationProperties = dogsConfigurationProperties;
     }
 
     @GetMapping("/{id}")
@@ -77,7 +80,7 @@ public class DogController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDog(@PathVariable Long id) {
-        dogClient.deleteDog(id);
+        dogClient.deleteDog(id, dogsConfigurationProperties.getDeleteToken());
         return ResponseEntity.ok().build();
     }
 }
