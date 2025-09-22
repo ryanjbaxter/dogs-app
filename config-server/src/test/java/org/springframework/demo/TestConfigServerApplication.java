@@ -65,20 +65,14 @@ public class TestConfigServerApplication {
 
 	private static void addSecrets(SecretsManagerClient secretsManagerClient) {
 		CreateSecretResponse resp = secretsManagerClient.createSecret(CreateSecretRequest.builder()
-				.name("/secret/dog-app/")         // Secret name (path-like names are common)
-				.description("App credentials")     // Optional
-				.secretString("{\"dogs.delete-token\":\"secrettoken2\",\"password\":\"s3cr3t\"}") // JSON string is typical
-				// .kmsKeyId("arn:aws:kms:us-east-1:123456789012:key/....")     // Optional custom KMS key
+				.name("/secret/dog-app/")
+				.secretString("{\"dogs.delete-token\":\"secrettoken2\"}")
 				.build());
-		System.out.printf(resp.toString());
 
 		resp = secretsManagerClient.createSecret(CreateSecretRequest.builder()
-				.name("/secret/dogs-client/")         // Secret name (path-like names are common)
-				.description("App credentials")     // Optional
-				.secretString("{\"dogs.delete-token\":\"secrettoken\",\"password\":\"s3cr3t\"}") // JSON string is typical
-				// .kmsKeyId("arn:aws:kms:us-east-1:123456789012:key/....")     // Optional custom KMS key
+				.name("/secret/dogs-client/")
+				.secretString("{\"dogs.delete-token\":\"secrettoken\"}")
 				.build());
-		System.out.printf(resp.toString());
 	}
 
 	private static void uploadTestFiles(S3Client s3Client) throws IOException {
