@@ -1,7 +1,5 @@
 spring:
   application:
     name: dogs-client
-  config:
-    import: "configserver:"
 server:
   port: 9090
