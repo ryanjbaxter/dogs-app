@@ -27,6 +27,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import static software.amazon.awssdk.core.SdkSystemSetting.AWS_ACCESS_KEY_ID;
+import static software.amazon.awssdk.core.SdkSystemSetting.AWS_SECRET_ACCESS_KEY;
+
 /**
  * @author Ryan Baxter
  */
@@ -48,6 +51,8 @@ public class TestConfigServerApplication {
 		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.endpoint="+secretManagerEndpoint);
 		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.region="+localStackContainer.getRegion());
 		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.prefix=/secret");
+        System.setProperty(AWS_ACCESS_KEY_ID.property(), key);
+        System.setProperty(AWS_SECRET_ACCESS_KEY.property(), secret);
 		awsArgs.addAll(Arrays.asList(args));
 		try (S3Client s3Client = createS3Client(s3Endpoint, key, secret, region)) {
 			createBucket(s3Client);
