@@ -1,6 +1,5 @@
 package org.springframework.demo;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.localstack.LocalStackContainer;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -18,7 +17,6 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 import software.amazon.awssdk.services.s3.model.CreateBucketResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.CreateSecretRequest;
 import software.amazon.awssdk.services.secretsmanager.model.CreateSecretResponse;
@@ -37,31 +35,31 @@ public class TestConfigServerApplication {
 	private static final Log LOG = LogFactory.getLog(TestConfigServerApplication.class);
 
 	public static void main(String[] args) {
-		LocalStackContainer localStackContainer = new LocalStackContainer("4.7.0");
+		LocalStackContainer localStackContainer = new LocalStackContainer("localstack/localstack:4.7.0")
+				.withServices("s3").withServices("secretsmanager");
 		localStackContainer.start();
 		List<String> awsArgs = new ArrayList<>();
-		String s3Endpoint = localStackContainer.getEndpointOverride(LocalStackContainer.Service.S3).toString();
-		String secretManagerEndpoint = localStackContainer.getEndpointOverride(LocalStackContainer.Service.SECRETSMANAGER).toString();
+		URI endpoint = localStackContainer.getEndpoint();
 		String key = localStackContainer.getAccessKey();
 		String secret = localStackContainer.getSecretKey();
 		String region = localStackContainer.getRegion();
-		awsArgs.add("--spring.cloud.config.server.awss3.endpoint="+localStackContainer.getEndpointOverride(LocalStackContainer.Service.S3).toString());
+		awsArgs.add("--spring.cloud.config.server.awss3.endpoint="+endpoint.toString());
 		awsArgs.add("--spring.cloud.config.server.awss3.region="+localStackContainer.getRegion());
 		awsArgs.add("--spring.cloud.config.server.awss3.bucket=dogs");
-		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.endpoint="+secretManagerEndpoint);
+		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.endpoint="+endpoint.toString());
 		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.region="+localStackContainer.getRegion());
 		awsArgs.add("--spring.cloud.config.server.aws-secretsmanager.prefix=/secret");
 		awsArgs.addAll(Arrays.asList(args));
 		System.setProperty(AWS_ACCESS_KEY_ID.property(), key);
 		System.setProperty(AWS_SECRET_ACCESS_KEY.property(), secret);
-		try (S3Client s3Client = createS3Client(s3Endpoint, key, secret, region)) {
+		try (S3Client s3Client = createS3Client(endpoint, key, secret, region)) {
 			createBucket(s3Client);
 			uploadTestFiles(s3Client);
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		try (SecretsManagerClient secretsManagerClient = createSecretsManagerClient(secretManagerEndpoint, key, secret, region)) {
+		try (SecretsManagerClient secretsManagerClient = createSecretsManagerClient(endpoint, key, secret, region)) {
 			addSecrets(secretsManagerClient);
 		}
 
@@ -115,9 +113,9 @@ public class TestConfigServerApplication {
 		System.out.println("File " + resource.getFile().getAbsolutePath() + " uploaded successfully to dogs/" + resource.getFilename());
 	}
 
-	private static S3Client createS3Client(String s3Endpoint, String key, String secret, String region) {
+	private static S3Client createS3Client(URI s3Endpoint, String key, String secret, String region) {
 		return S3Client.builder()
-				.endpointOverride(URI.create(s3Endpoint))
+				.endpointOverride(s3Endpoint)
 				.credentialsProvider(StaticCredentialsProvider.create(
 						AwsBasicCredentials.create(key, secret)))
 				.region(Region.of(region))
@@ -130,8 +128,8 @@ public class TestConfigServerApplication {
 		LOG.info(response);
 	}
 
-	private static SecretsManagerClient createSecretsManagerClient(String secretManagerEndpoint, String key, String secret, String region) {
-		return SecretsManagerClient.builder().endpointOverride(URI.create(secretManagerEndpoint)).credentialsProvider(StaticCredentialsProvider.create(
+	private static SecretsManagerClient createSecretsManagerClient(URI secretManagerEndpoint, String key, String secret, String region) {
+		return SecretsManagerClient.builder().endpointOverride(secretManagerEndpoint).credentialsProvider(StaticCredentialsProvider.create(
 						AwsBasicCredentials.create(key, secret)))
 				.region(Region.of(region))
 				.build();
